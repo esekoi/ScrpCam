@@ -1,0 +1,43 @@
+
+#
+# Function to print help
+#
+print_help_uu()
+{
+	   echo "pendiente, esto esta mal: $0 -c -d -m -v {editor name}"; 
+	   echo "Where -c clear the screen";
+	   echo "      -d show dir";
+	   echo "      -m start midnight commander shell";
+	   echo "      -e {editor}, start {editor} of your choice";
+	   return
+}
+
+
+
+#
+# Main procedure start here
+#
+# Check for sufficent args
+#
+
+if [ $# -eq 0 ] ; then
+    print_help_uu
+    exit 1
+fi  
+
+
+#
+# Now parse command line arguments
+#
+while getopts cdme: opt
+do
+    case "$opt" in
+	c) cls;;
+	d) show_ls;;
+	m) start_mc;;
+	e) thised="$OPTARG"; start_ed $thised ;;
+	\?) print_help_uu; exit 1;; 
+    esac
+done        	   
+	   
+	
