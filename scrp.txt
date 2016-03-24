@@ -1,4 +1,24 @@
 
+l=720;
+w=480;
+b=8000000;
+
+check_format(){
+#  test to see if they gave the -s option
+#
+if [ "x" == "x$dir" ]; then
+  print_help_uu
+  exit
+fi
+if [ "x" == "x$port1" ]; then
+  print_help_uu
+  exit
+fi
+if [ "x" == "x$port2" ]; then
+  print_help_uu
+  exit
+fi
+}
 #
 # Function to print help
 #
@@ -20,21 +40,23 @@ print_help_uu()
 # Check for sufficent args
 #
 
-if [ $# -eq 0 ] ; then
-    print_help_uu
+if [ $# -lt 2 ] ; then
+    print_help_uu;
     exit 1
 fi  
-
+dir=$1;
+port1=$2
+port2=$3
 
 #
 # Now parse command line arguments
 #
-while getopts cdme: opt
+while getopts l:w:b: opt
 do
     case "$opt" in
-	c) cls;;
-	d) show_ls;;
-	m) start_mc;;
+	l) l=$OPTARG;;
+	w) w=$OPTARG;;
+	b) b=$OPTARG*1000;;
 	e) thised="$OPTARG"; start_ed $thised ;;
 	\?) print_help_uu; exit 1;; 
     esac
