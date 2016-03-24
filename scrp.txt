@@ -24,11 +24,11 @@ fi
 #
 print_help_uu()
 {
-	   echo "pendiente, esto esta mal: $0 -c -d -m -v {editor name}"; 
-	   echo "Where -c clear the screen";
-	   echo "      -d show dir";
-	   echo "      -m start midnight commander shell";
-	   echo "      -e {editor}, start {editor} of your choice";
+	   echo "uso:$0 <dir> <port1> <port2> [options]"; 
+	   echo "Where options are";
+	   echo "      -l value: length of the screen";
+	   echo "      -w value: width of the screen";
+	   echo "      -b value: transmision rate in KB";
 	   return
 }
 
@@ -40,26 +40,31 @@ print_help_uu()
 # Check for sufficent args
 #
 
-if [ $# -lt 2 ] ; then
+if [ $# -lt  2 ] ; then
     print_help_uu;
     exit 1
-fi  
+fi 
 dir=$1;
 port1=$2
 port2=$3
-
-#
-# Now parse command line arguments
-#
-while getopts l:w:b: opt
+OPTIND=4
+while getopts "l:w:b:" opt;
 do
-    case "$opt" in
+    case "$opt" in 
 	l) l=$OPTARG;;
-	w) w=$OPTARG;;
-	b) b=$OPTARG*1000;;
-	e) thised="$OPTARG"; start_ed $thised ;;
+	w) w=$OPTARG	;;
+	b) b="$OPTARG"
+		let b=$b*1000;;
+	:);;
 	\?) print_help_uu; exit 1;; 
     esac
 done        	   
-	   
+	 
+
+#
+# Now parse command line arguments
+#   
 	
+
+
+echo direccion $dir   puerto video $port1   puerto control $port2   alto $l    ancho $w   rate $b
